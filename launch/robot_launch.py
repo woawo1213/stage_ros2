@@ -77,6 +77,11 @@ def generate_launch_description():
         executable='static_transform_publisher',
         arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link']
     )
+    st_base_link2scan = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0.25', '0', '0.25', '0', '0', '0', 'base_link', 'scan']
+    )
 
     slam_toolbox = Node(
         condition=IfCondition(use_slam),
@@ -140,6 +145,7 @@ def generate_launch_description():
         start_rviz_cmd,
         st_map2odom,
         st_odom2base_link,
+        st_base_link2scan,
         start_launch_cmd,
         slam_toolbox,
     ])

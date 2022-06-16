@@ -35,7 +35,7 @@ define tiage position
   gui_nose 1
   drive "diff"
   bitmap "robot.png"
-  topurg(pose [ 0.000 0.000 0.000 0.000 ])
+  topurg(pose [ 0.250 0.000 0.00 0.00 ])
 )
 
 
