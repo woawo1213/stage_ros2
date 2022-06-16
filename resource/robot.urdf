@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+
+<robot name="tiago" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="base_length" value="0.125"/>
+  <xacro:property name="base_radius" value="0.27"/>
+  <xacro:property name="wheel_radius" value="0.0985"/>
+  <xacro:property name="wheel_width" value="0.15"/>
+  <!-- Base SETIP-->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="${base_length}" radius="${base_radius}"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Wheel SETUP -->
+  <link name="wheel_right_link">
+    <visual>
+      <origin rpy="-3.14 0 0"/>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <material name="White">
+        <color rgba="${255/255} ${255/255} ${255/255} 1.0"/>
+     </material>
+    </visual>
+  </link>
+
+  <joint name="wheel_right_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="wheel_right_link"/>
+    <origin rpy="1.57 0 0" xyz="0 -0.4044 -0.1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6.0" lower="-3.14" upper="3.14" velocity="10"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <visual>
+      <origin rpy="-3.14 0 0"/>
+      <geometry>
+        <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+      </geometry>
+      <material name="White">
+        <color rgba="${255/255} ${255/255} ${255/255} 1.0"/>
+     </material>
+    </visual>
+  </link>
+
+  <joint name="wheel_left_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="wheel_left_link"/>
+    <origin rpy="1.57 0 0" xyz="0 0.4044 -0.1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6.0" lower="-3.14" upper="3.14" velocity="10"/>
+  </joint>
+
+  <!-- LIDAR SETUP -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="scan"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="scan">
+    <visual>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+      <cylinder radius="0.05" length="0.15"/>
+     </geometry>
+     <material name="Black">
+          <color rgba="${0/255} ${0/255} ${0/255} 1.0"/>
+     </material>
+    </visual>
+  </link>
+</robot>
