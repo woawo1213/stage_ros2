@@ -4,7 +4,8 @@
 ```bash
 $ mkdir -p stage_ros2_ws/src
 $ cd stage_ros2_ws/src
-$ git clone https://bitbucket.org/wonikrobotics/stage_ros2.git
+$ git clone https://github.com/woawo1213/stage_ros2.git
+$ sudo apt-get install ros-noetic-stage # for FLTK
 $ cd ..
 $ colcon build
 ```
@@ -18,7 +19,7 @@ ros2 run stage_ros stageros src/stage_ros2/world/wonik_4th.world
 
 
 ### Robot Navigation
-Launch 파일 실행 시 다음 옵션 사용m
+Launch 파일 실행 시 다음 옵션 사용
 
 ```
 # Navigation
