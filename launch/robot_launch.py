@@ -17,15 +17,16 @@ def generate_launch_description():
         package='stage_ros').find('stage_ros')
     default_rviz_config_path = os.path.join(
         pkg_share, 'rviz/robot.rviz')
+    # default_bt_config_path = os.path.join(pkg_share, 'bt/nav2_dist.xml')
     default_map_path = os.path.join(pkg_share, 'map/wonik_4th.yaml')
     default_urdf_model_path = os.path.join(pkg_share, 'resource/robot.urdf')
     nav2_launch_file_dir = os.path.join(
         get_package_share_directory('nav2_bringup'), 'launch')
-    param_dir = os.path.join(pkg_share, 'config/nav2_dwb_params.yaml')
+    param_dir = os.path.join(pkg_share, 'config/nav2_teb_params.yaml')
     control_dir = os.path.join(pkg_share, 'config/ros2_control.yml')
-    gui = LaunchConfiguration('gui')
     urdf_model = LaunchConfiguration('urdf_model')
     rviz_config_file = LaunchConfiguration('rviz_config_file')
+    # bt_config_file = LaunchConfiguration('bt_config_file')
     use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
     use_rviz = LaunchConfiguration('use_rviz')
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -33,16 +34,9 @@ def generate_launch_description():
     use_nav = LaunchConfiguration('nav', default=False)
 
     start_joint_state_publisher_cmd = Node(
-        condition=UnlessCondition(gui),
         package='joint_state_publisher',
         executable='joint_state_publisher',
         name='joint_state_publisher')
-
-    start_joint_state_publisher_gui_node = Node(
-        condition=IfCondition(gui),
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui')
 
     start_robot_state_publisher_cmd = Node(
         condition=IfCondition(use_robot_state_pub),
@@ -77,6 +71,7 @@ def generate_launch_description():
         executable='static_transform_publisher',
         arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link']
     )
+
     st_base_link2scan = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
@@ -120,11 +115,6 @@ def generate_launch_description():
             description='Full path to map file to load'),
 
         DeclareLaunchArgument(
-            name='gui',
-            default_value='True',
-            description='Flag to enable joint_state_publisher_gui'),
-
-        DeclareLaunchArgument(
             name='use_robot_state_pub',
             default_value='True',
             description='Whether to start the robot state publisher'),
@@ -139,8 +129,12 @@ def generate_launch_description():
             default_value='True',
             description='Use simulation (Gazebo) clock if true'),
 
+        # DeclareLaunchArgument(
+        #     name='bt_config_file',
+        #     default_value=default_bt_config_path,
+        #     description='Full paht to the Behavior Tree config file to use'),
+
         start_joint_state_publisher_cmd,
-        start_joint_state_publisher_gui_node,
         start_robot_state_publisher_cmd,
         start_rviz_cmd,
         st_map2odom,
