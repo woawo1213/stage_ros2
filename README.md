@@ -1,4 +1,7 @@
-# Stage for Ros2 
+# Stage for Ros2
+ 
+## Environment
+**Ubuntu 20.04 ROS2 Galactic**
 
 ## Installation
 ```bash
