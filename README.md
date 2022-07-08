@@ -3,6 +3,9 @@
 ## Environment
 **Ubuntu 20.04 ROS2 Galactic**
 
+## Reference
+https://github.com/n0nzzz/stage_ros2
+
 ## Installation
 ```bash
 $ mkdir -p stage_ros2_ws/src
@@ -40,5 +43,8 @@ ros2 launch stage_ros robot_launch slam:=true
 
 # Terminal 2
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+# Terminal 3
+ros2 launch teleop_twist_joy teleop-launch.py joy_config:='xbox'
 ```
 <img src="doc/slam.png" width="700" height="700">
