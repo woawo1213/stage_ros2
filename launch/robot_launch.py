@@ -27,6 +27,8 @@ def generate_launch_description():
     urdf_model = LaunchConfiguration('urdf_model')
     rviz_config_file = LaunchConfiguration('rviz_config_file')
     # bt_config_file = LaunchConfiguration('bt_config_file')
+    laser_filter_dir = os.path.join(
+        pkg_share, 'config/laser_filter_config_s1.yaml')
     use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
     use_rviz = LaunchConfiguration('use_rviz')
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -87,6 +89,13 @@ def generate_launch_description():
         output='screen',
     )
 
+    laser_filter = Node(
+        package="laser_filters",
+        executable="scan_to_scan_filter_chain",
+        parameters=[laser_filter_dir],
+        remappings=[('scan_filtered', 'lrf/scan')],
+    )
+
     start_launch_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [nav2_launch_file_dir, '/bringup_launch.py']),
@@ -142,4 +151,5 @@ def generate_launch_description():
         st_base_link2scan,
         start_launch_cmd,
         slam_toolbox,
+        laser_filter,
     ])
